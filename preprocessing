@@ -1,0 +1,43 @@
+Sebelum melakukan proses pengerjaan, kita membutuhkan instalasi beberapa packages yang diperlukan seperti pada bawah ini:
+
+import numpy as np
+import pandas as pd
+from sklearn.preprocessing import (LabelEncoder, OneHotEncoder, StandardScaler, MinMaxScaler)
+
+Membaca data:
+data = pd.read_csv('nama_file.csv')
+
+Membersihkan data:
+Menghapus data yang duplikat:
+data = data.drop_duplicates()
+
+Mengatasi nilai yang hilang:
+# Menghapus baris dengan nilai yang hilang
+data = data.dropna()
+
+# Mengisi nilai yang hilang dengan nilai rata-rata
+data['kolum'].fillna(data['kolom'].mean(), inplace=True)
+
+# Mengisi nilai yang hilang dengan nilai median
+data['kolum'].fillna(data['kolom'].median(), inplace=True)
+
+Mengubah variabel kategorikal menjadi numerik:
+Menggunakan LabelEncoder:
+label_encoder = LabelEncoder()
+data['kolum_encoded'] = label_encoder.fit_transform(data['kolum'])
+
+Menggunakan OneHotEncoder:
+onehot_encoder = OneHotEncoder()
+data_encoded = pd.DataFrame(onehot_encoder.fit_transform(data[['kolum']]).toarray())
+
+Penskalaan data:
+Standarisasi menggunakan StandardScaler:
+scaler = StandardScaler()
+data_scaled = scaler.fit_transform(data[['kolum']])
+
+Normalisasi menggunakan MinMaxScaler:
+scaler = MinMaxScaler()
+data_scaled = scaler.fit_transform(data[['kolum']])
+
+Menyimpan data yang telah diproses:
+data.to_csv('nama_file.csv', index=False)
